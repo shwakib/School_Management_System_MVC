@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "HomeIndex";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Landing Page</title>
+</head>
+<body>
+    <div>
+        <h1 style="text-align:center">Welcome to School Management System</h1>
+        <br />
+        <br />
+        <img src="~/img/img_school.jpg" alt="img_school">
+        <br />
+        <br />
+        <table style="width: 70%;">
+            <tr>
+                <td>Date</td>
+
+                <td>
+                    Notice Description
+                </td>
+                
+            </tr>
+            @foreach (var item in (Mid_SchoolManagementSystem.Models.DataAccess.generalnotice[])TempData["noticelist"])
+            {<tr>
+                    <td>
+                        @item.postdate
+                    </td>
+                    <td>
+                        @item.noticedescription
+                    </td>
+
+                </tr>
+            }
+        </table>
+        <br />
+        @*<h3>Admin Landing page</h3>*@
+    </div>
+</body>
+</html>

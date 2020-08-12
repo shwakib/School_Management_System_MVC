@@ -1,0 +1,108 @@
+﻿@model Mid_SchoolManagementSystem.Models.DataAccess.assignedcourse
+
+@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AssignTeacher</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+       
+        $(document).ready(function () {
+            $("#subjectid").change(function () {
+                $.get("/Data/GetTeacher", { subjectid: $("#subjectid").val() }, function (data) {
+                    $("#teacherid").empty();
+                    $.each(data, function (index, row) {
+                        $("#teacherid").append("<option value='" + row.teacherid + "'>" + row.teachername + "</option>")
+                    });
+                });
+                $.get("/Data/GetClass", { subjectid: $("#subjectid").val() }, function (data) {
+                    $("#classid").empty();
+                    $("#classid").attr("name", "classid");
+                    $.each(data, function (index, row) {
+                        $("#classid").append("<option value='" + row.classid + "'>" + row.classid + "</option>")
+                    });
+                });
+
+            })
+            $('#classidselector').on('click', 'select', function () {
+                $.get("/Data/GetSection", { classid: $("#classid").val() }, function (data) {
+                    $("#sectionid").empty();
+                    $.each(data, function (index, row) {
+                        $('#sectionid').append("<option value='" + row.sectionid + "'>" + row.sectionname + "</option>")
+                    });
+                });
+            });
+        });
+    </script>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>assignedcourse</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.subjectid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <select name="subjectid" id="subjectid">
+                        @foreach (var item in (Mid_SchoolManagementSystem.Models.DataAccess.subject[])ViewData["subjectlist"])
+                        {
+                            <option value="@item.subjectid" >
+                                @item.subjectname
+                            </option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.subjectid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.teacherid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("teacherid", new SelectList(" "), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.teacherid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.classid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" id="classidselector">
+                    @Html.DropDownList("classid", new SelectList(" "), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.classid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.sectionid, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("sectionid", new SelectList(" "), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.sectionid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+﻿@model Mid_SchoolManagementSystem.Models.DataAccess.grade
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ViewGrade</title>
+</head>
+<body>
+    <div> 
+        <table border="1">
+            <tr>
+                <th>Quiz1</th>
+                <th>Quiz2</th>
+                <th>Assignment1</th>
+                <th>Half Yearly Grade</th>
+                <th>Quiz3</th>
+                <th>Quiz4</th>
+                <th>Assignment2</th>
+                <th>Final Exam Grade</th>
+            </tr>
+            @foreach (var item in (Mid_SchoolManagementSystem.Models.DataAccess.grade[])TempData["gradedetails"])
+            {
+        <tr>
+            <th>
+                @item.quiz1
+            </th>
+            <th>
+                @item.quiz2
+            </th>
+            <th>
+                @item.assignment1
+            </th>
+            <th>
+                @item.halfyearlygrade
+            </th>
+            <th>
+                @item.quiz3
+            </th>
+            <th>
+                @item.quiz4
+            </th>
+            <th>
+                @item.assignment2
+            </th>
+            <th>
+                @item.finalexamgrade
+            </th>
+        </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿@model Mid_SchoolManagementSystem.Models.DataAccess.coursenotice
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CheckNotice</title>
+</head>
+<body>
+    
+    <div> 
+        <table border="1">
+            <tr>
+                <th>
+                    Notice Subject
+                </th>
+                <th>
+                    Notice Description
+                </th>
+            </tr>
+            @foreach(var item in (Mid_SchoolManagementSystem.Models.DataAccess.coursenotice[])TempData["noticedetails"])
+            {
+                <tr>
+                    <th>
+                        @item.noticesubject
+                    </th>
+                    <th>
+                        @item.noticedescription
+                    </th>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
